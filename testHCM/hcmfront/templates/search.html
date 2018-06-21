@@ -1,0 +1,43 @@
+ {% extends 'base.html' %}
+
+ {% block content %}
+
+<h1 style="margin:  5%;"> Resultado de la busqueda </h1>
+
+<table class="table table-dark" style="margin: 5%; width: 90%">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Cantidad</th>
+      <th scope="col">Hora Desde</th>
+      <th scope="col">Hora Hasta</th>
+      <th scope="col">Estatus</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% for s in sala %}
+    <tr>
+      <th> {{ s.id }} </th>
+      <td> {{ s.nombre }} </td>
+      <td> {{ s.capacidad }} </td>
+      <td> {{ s.horario_desde }} </td>
+      <td> {{ s.horario_hasta }} </td>
+      <td> {{ s.status.nombre}} </td>
+      <td> {% if s.status.id == 2 %} 
+      			<a href="/reservar/{{s.id}}" class="badge badge-success">Reservar</a> 
+      	   {% else %}
+      			<a href="solicitud/" class="badge badge-info">Solicitar</a> 
+      	   {% endif %}
+  		</td>
+    </tr>
+    {% endfor %}
+
+
+  </tbody>
+</table>
+
+ {% endblock %}
+
+

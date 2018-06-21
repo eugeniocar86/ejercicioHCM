@@ -1,0 +1,66 @@
+ {% extends 'base.html' %}
+
+ {% block content %}
+
+<h1 style="margin:  5%; padding-left: 15px;"> Buscar Salas </h1>
+<form action="search/" method="get">
+  <div class="row" style="margin: 5%;">
+    <div class="col-md-2">
+      <input type="number" id="cantidad" name="cantidad" class="form-control" placeholder="Cantidad de Personas ... " aria-label="Username" aria-describedby="basic-addon1">
+    </div>
+
+    <div class="col-md-2">
+      <input type="time" id="hora_desde" name="hora_desde" class="form-control" placeholder="Hora desde" aria-label="Username" aria-describedby="basic-addon1">
+    </div>
+
+    <div class="col-md-2">
+      <input type="time" id="hora_hasta" name="hora_hasta" class="form-control" placeholder="Hora hasta" aria-label="Username" aria-describedby="basic-addon1">
+    </div>
+
+    <div class="col-md-2">
+      <input type="date" id="fecha" name="fecha" class="form-control" placeholder="Fecha" aria-label="Username" aria-describedby="basic-addon1">
+    </div>
+
+    <div class="col-md-2">
+      <h3> Insumos </h3>
+
+      <input type="hidden" id="arr_ids" name="arr_ids" class="form-control"/>
+      
+      {% for i in insumo %}
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input"  onchange='add({{i.id}})' id="c{{i.id}}">
+
+        <label class="form-check-label" for="exampleCheck1">{{i.nombre}}</label>
+      </div>
+      {% endfor %}
+
+    </div>
+
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-dark">Buscar</button>
+    </div>
+
+  </div>
+
+</form>
+<script type="text/javascript">
+  function add(id)
+  {
+    var identifier = "#c"+id;
+
+    console.log($(identifier).prop('checked'));
+
+    if ($(identifier).prop('checked'))
+    {
+      var a = $("#arr_ids").val();
+      $("#arr_ids").val(a + id + ",")
+    }
+    else
+    {
+      $("#arr_ids").val($("#arr_ids").val().replace(id + ",", ""))
+    }
+  }
+</script>
+ {% endblock %}
+
+

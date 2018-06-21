@@ -1,0 +1,76 @@
+ {% extends 'base.html' %}
+
+ {% block content %}
+
+<h1 style="margin:  5%;"> Reservar sala </h1>
+
+<div class="card" style="width: 90%; margin: 5%;">
+  <div class="card-body">
+    <form action="/reserva/{{sala.id}}/save/" method="post"> 
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Fecha</label>
+        <input type="date" class="form-control" id="date" name="date">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Hora Inicio</label>
+        <input type="time" class="form-control" id="hora_inicio" name="hora_inicio">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Hora Fin</label>
+        <input type="time" class="form-control" id="hora_fin"  name="hora_fin">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Cantidad de personas</label>
+        <input type="number" min="0" max="{{sala.capacidad}}" class="form-control" id="capacidad" name="capacidad">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">Insumos de la sala</label>
+
+           <input type="hidden" id="arr_ids" name="arr_ids" class="form-control"/>
+
+          {% for i in insumos %}
+
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input"  onchange='add({{i.id}})' id="c{{i.id}}">
+
+              <label class="form-check-label" for="exampleCheck1">{{i.nombre}}</label>
+            </div>
+
+          {% endfor %}
+
+        
+      </div>
+
+      <button type="submit" class="btn btn-primary"> Reservar </button>
+
+    </form>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  function add(id)
+  {
+    var identifier = "#c"+id;
+
+    console.log($(identifier).prop('checked'));
+
+    if ($(identifier).prop('checked'))
+    {
+      var a = $("#arr_ids").val();
+      $("#arr_ids").val(a + id + ",")
+    }
+    else
+    {
+      $("#arr_ids").val($("#arr_ids").val().replace(id + ",", ""))
+    }
+  }
+
+</script>
+ {% endblock %}
